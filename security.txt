@@ -1,0 +1,11 @@
+# file: frontend/.well-known/security.txt
+Contact: mailto:security@voicesafe.ai
+Contact: mailto:support@voicesafe.ai
+Preferred-Languages: en, sk
+Canonical: https://voicesafe.ai/.well-known/security.txt
+Policy: https://voicesafe.ai/security
+Acknowledgments: https://voicesafe.ai/security#hall-of-fame
+Encryption: https://voicesafe.ai/pgp.txt
+
+# Optional: bug bounty (if you add later)
+# Hiring: https://voicesafe.ai/careers

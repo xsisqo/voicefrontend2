@@ -1,0 +1,2942 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+
+  <title>VoiceSafe  Your AI Guardian Against Voice Scams</title>
+
+  <meta name="description" content="Upload a voice message. Know in seconds if its trying to scam you  before you send money." />
+
+
+
+  <!-- OpenGraph / Twitter -->
+
+  <meta property="og:title" content="VoiceSafe  Your AI Guardian Against Voice Scams" />
+
+  <meta property="og:description" content="Upload a voice message. Know in seconds if its trying to scam you  before you send money." />
+
+  <meta property="og:type" content="website" />
+
+  <meta property="og:url" content="https://voicesafe.ai" />
+
+  <meta property="og:image" content="/og-image.png" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <meta name="twitter:title" content="VoiceSafe  Your AI Guardian Against Voice Scams" />
+
+  <meta name="twitter:description" content="Upload a voice message. Know in seconds if its trying to scam you  before you send money." />
+
+  <meta name="twitter:image" content="/og-image.png" />
+
+
+
+  <!-- Favicons / PWA -->
+
+  <link rel="icon" href="/favicon.png" type="image/png" />
+
+  <link rel="apple-touch-icon" href="/icon-192.png" />
+
+  <link rel="manifest" href="/manifest.webmanifest" />
+
+  <meta name="theme-color" content="#070A12" />
+
+
+
+  <!-- Tailwind (prototype/early access) -->
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+
+
+  <!-- Icons -->
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+
+
+  <style>
+
+    :root{
+
+      --bg0:#070A12;
+
+      --bg1:#0B1220;
+
+      --stroke:rgba(255,255,255,.10);
+
+      --gold1:#F7D774;
+
+      --gold2:#C9A24A;
+
+      --muted:rgba(255,255,255,.74);
+
+      --shadow:0 22px 70px rgba(0,0,0,.55);
+
+      --shadow2:0 14px 50px rgba(0,0,0,.45);
+
+      --glassA:rgba(255,255,255,.07);
+
+      --glassB:rgba(255,255,255,.03);
+
+    }
+
+    html,body{height:100%}
+
+    body{
+
+      background:
+
+        radial-gradient(1000px 650px at 14% 10%, rgba(247,215,116,.14), transparent 62%),
+
+        radial-gradient(900px 600px at 88% 0%, rgba(201,162,74,.12), transparent 60%),
+
+        radial-gradient(1000px 760px at 50% 105%, rgba(99,102,241,.12), transparent 62%),
+
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+
+      color:#fff;
+
+      overflow-x:hidden;
+
+      -webkit-font-smoothing:antialiased;
+
+      text-rendering:optimizeLegibility;
+
+    }
+
+    *{box-sizing:border-box}
+
+    .muted{color:var(--muted)}
+
+    .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;}
+
+    .glass{
+
+      background:linear-gradient(180deg, var(--glassA), var(--glassB));
+
+      border:1px solid var(--stroke);
+
+      box-shadow:var(--shadow);
+
+      backdrop-filter:blur(10px);
+
+    }
+
+    .glass-soft{
+
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.025));
+
+      border:1px solid rgba(255,255,255,.09);
+
+      box-shadow:var(--shadow2);
+
+      backdrop-filter:blur(10px);
+
+    }
+
+    .gold-border{
+
+      border:1px solid rgba(247,215,116,.34);
+
+      box-shadow:0 0 0 1px rgba(201,162,74,.18) inset;
+
+    }
+
+    .gold-text{
+
+      background:linear-gradient(90deg, var(--gold1), var(--gold2));
+
+      -webkit-background-clip:text;
+
+      background-clip:text;
+
+      color:transparent;
+
+    }
+
+    .chip{
+
+      border:1px solid rgba(255,255,255,.10);
+
+      background:rgba(255,255,255,.05);
+
+    }
+
+    .btn-gold{
+
+      background:linear-gradient(90deg, rgba(247,215,116,1), rgba(201,162,74,1));
+
+      color:#111827;
+
+      box-shadow:0 12px 34px rgba(247,215,116,.18);
+
+      transition:transform .12s ease, filter .12s ease, box-shadow .12s ease;
+
+    }
+
+    .btn-gold:hover{filter:brightness(1.03); transform:translateY(-1px)}
+
+    .btn-gold:active{transform:translateY(0)}
+
+    .btn-gold:disabled{opacity:.45; cursor:not-allowed; box-shadow:none; transform:none}
+
+    .focus-ring:focus{outline:none; box-shadow:0 0 0 3px rgba(247,215,116,.25)}
+
+    .bar{
+
+      height:10px;
+
+      border-radius:999px;
+
+      background:rgba(255,255,255,.08);
+
+      overflow:hidden;
+
+      border:1px solid rgba(255,255,255,.10);
+
+    }
+
+    .bar>div{
+
+      height:100%;
+
+      border-radius:999px;
+
+      background:linear-gradient(90deg, rgba(247,215,116,1), rgba(201,162,74,1));
+
+      width:0%;
+
+      transition:width .35s ease;
+
+    }
+
+    .safe-pb{padding-bottom:env(safe-area-inset-bottom)}
+
+    .kbd{
+
+      border:1px solid rgba(255,255,255,.12);
+
+      background:rgba(255,255,255,.06);
+
+      padding:.15rem .45rem;
+
+      border-radius:.5rem;
+
+      font-size:.72rem;
+
+    }
+
+    .divider{border-top:1px solid rgba(255,255,255,.10)}
+
+
+
+    /* ===== Risk UI (Enterprise) ===== */
+
+    .risk-ring { position: relative; }
+
+    .risk-ring::before{
+
+      content:"";
+
+      position:absolute; inset:-2px;
+
+      border-radius: 24px;
+
+      pointer-events:none;
+
+      opacity:0;
+
+      filter: blur(14px);
+
+      transition: opacity .25s ease, transform .25s ease;
+
+      transform: scale(.985);
+
+    }
+
+    .risk-ring[data-risk="LOW"]::before{ opacity:.22; background: rgba(34,197,94,.45); }
+
+    .risk-ring[data-risk="GUARDED"]::before{ opacity:.25; background: rgba(59,130,246,.45); }
+
+    .risk-ring[data-risk="ELEVATED"]::before{ opacity:.30; background: rgba(245,158,11,.50); }
+
+    .risk-ring[data-risk="HIGH"]::before{ opacity:.36; background: rgba(249,115,22,.55); }
+
+    .risk-ring[data-risk="CRITICAL"]::before{ opacity:.42; background: rgba(239,68,68,.60); }
+
+
+
+    .risk-border{ transition: border-color .25s ease, box-shadow .25s ease; border:1px solid rgba(255,255,255,.10); }
+
+    .risk-border[data-risk="LOW"]{ border-color: rgba(34,197,94,.35); box-shadow: 0 0 0 1px rgba(34,197,94,.18) inset; }
+
+    .risk-border[data-risk="GUARDED"]{ border-color: rgba(59,130,246,.35); box-shadow: 0 0 0 1px rgba(59,130,246,.18) inset; }
+
+    .risk-border[data-risk="ELEVATED"]{ border-color: rgba(245,158,11,.40); box-shadow: 0 0 0 1px rgba(245,158,11,.20) inset; }
+
+    .risk-border[data-risk="HIGH"]{ border-color: rgba(249,115,22,.45); box-shadow: 0 0 0 1px rgba(249,115,22,.22) inset; }
+
+    .risk-border[data-risk="CRITICAL"]{ border-color: rgba(239,68,68,.50); box-shadow: 0 0 0 1px rgba(239,68,68,.24) inset; }
+
+
+
+    .risk-badge{
+
+      display:inline-flex; align-items:center; gap:.5rem;
+
+      padding:.25rem .6rem;
+
+      border-radius: 9999px;
+
+      border: 1px solid rgba(255,255,255,.14);
+
+      background: rgba(255,255,255,.06);
+
+      backdrop-filter: blur(8px);
+
+      font-weight: 800;
+
+      letter-spacing: .08em;
+
+      text-transform: uppercase;
+
+      font-size: 11px;
+
+      line-height: 1;
+
+      transition: background .2s ease, border-color .2s ease;
+
+    }
+
+    .risk-badge[data-risk="LOW"]{ border-color: rgba(34,197,94,.35); }
+
+    .risk-badge[data-risk="GUARDED"]{ border-color: rgba(59,130,246,.35); }
+
+    .risk-badge[data-risk="ELEVATED"]{ border-color: rgba(245,158,11,.40); }
+
+    .risk-badge[data-risk="HIGH"]{ border-color: rgba(249,115,22,.45); }
+
+    .risk-badge[data-risk="CRITICAL"]{ border-color: rgba(239,68,68,.50); }
+
+  
+    /* Language switch (fix desktop dropdown + flags visibility) */
+    #langSwitch{
+      min-width: 180px;
+    }
+    #langSwitch option{
+      color:#111 !important;
+      background:#fff !important;
+    }
+
+  </style>
+
+</head>
+
+
+
+<body class="min-h-screen safe-pb">
+
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
+
+
+
+<!-- Language switch -->
+
+<div class="flex justify-end mb-3">
+
+  <select id="langSwitch" class="chip rounded-xl px-3 py-2 text-xs">
+          <option value="en">🇺🇸 English</option>
+          <option value="sk">🇸🇰 Slovenčina</option>
+          <option value="de">🇩🇪 Deutsch</option>
+          <option value="fr">🇫🇷 Français</option>
+          <option value="es">🇪🇸 Español</option>
+          <option value="it">🇮🇹 Italiano</option>
+          <option value="pt">🇵🇹 Português</option>
+          <option value="nl">🇳🇱 Nederlands</option>
+          <option value="sv">🇸🇪 Svenska</option>
+          <option value="no">🇳🇴 Norsk</option>
+          <option value="da">🇩🇰 Dansk</option>
+          <option value="fi">🇫🇮 Suomi</option>
+          <option value="pl">🇵🇱 Polski</option>
+          <option value="cs">🇨🇿 Čeština</option>
+          <option value="hu">🇭🇺 Magyar</option>
+          <option value="ro">🇷🇴 Română</option>
+          <option value="bg">🇧🇬 Български</option>
+          <option value="el">🇬🇷 Ελληνικά</option>
+          <option value="tr">🇹🇷 Türkçe</option>
+          <option value="uk">🇺🇦 Українська</option>
+          <option value="ru">🇷🇺 Русский</option>
+          <option value="ar">🇸🇦 العربية</option>
+          <option value="he">🇮🇱 עברית</option>
+          <option value="hi">🇮🇳 हिन्दी</option>
+          <option value="id">🇮🇩 Bahasa Indonesia</option>
+          <option value="vi">🇻🇳 Tiếng Việt</option>
+          <option value="th">🇹🇭 ไทย</option>
+          <option value="zh">🇨🇳 中文</option>
+          <option value="ja">🇯🇵 日本語</option>
+          <option value="ko">🇰🇷 한국어</option>
+        </select>
+
+</div>
+
+
+
+    <!-- Top strip -->
+
+    <div class="flex items-center justify-between gap-3 mb-6">
+
+      <div class="inline-flex items-center gap-2 chip px-3 py-1.5 rounded-full text-xs">
+
+        <i class="fa-solid fa-shield-halved"></i>
+
+        <span class="opacity-90">Early Access</span>
+
+        <span class="opacity-40"></span>
+
+        <span class="opacity-80"><span id="waitlistCountBadge">0</span> people joined</span>
+
+      </div>
+
+      <div class="hidden sm:flex items-center gap-2 text-xs muted">
+
+        <span id="liveActivity"></span>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- TRUST BAR -->
+
+    <div class="mt-5 grid grid-cols-1 lg:grid-cols-12 gap-3 items-center">
+
+      <div class="lg:col-span-7 text-xs opacity-85 tracking-wide">
+
+        <span class="opacity-70">Built for evaluation by</span>
+
+        <span class="font-semibold opacity-95">Banks  Fraud Operations  Compliance (KYC/AML)  Investigations</span>
+
+        <span class="opacity-50"></span>
+
+        <span class="opacity-80">Advisory signals, not identity verification.</span>
+
+      </div>
+
+      <div class="lg:col-span-5 flex flex-wrap gap-2 lg:justify-end">
+
+        <span class="chip rounded-full px-3 py-1 text-[11px]"><i class="fa-solid fa-shield-halved mr-2"></i>Privacy-first posture</span>
+
+        <span class="chip rounded-full px-3 py-1 text-[11px]"><i class="fa-solid fa-clipboard-check mr-2"></i>Audit-friendly outputs</span>
+
+        <span class="chip rounded-full px-3 py-1 text-[11px]"><i class="fa-solid fa-plug mr-2"></i>API-first integration</span>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- Enterprise toggle -->
+
+    <div class="flex items-center gap-2 mt-3">
+
+      <span class="text-xs muted hidden sm:inline">Tone</span>
+
+      <button id="toneToggle" class="chip rounded-full px-3 py-1.5 text-xs font-semibold hover:opacity-90" type="button">
+
+        <i class="fa-solid fa-building-columns mr-2"></i>Enterprise mode: OFF
+
+      </button>
+
+    </div>
+
+
+
+    <!-- HERO -->
+
+    <section class="glass gold-border rounded-3xl p-6 sm:p-8 mt-4">
+
+      <div class="flex flex-wrap items-center gap-2">
+
+        <span class="chip rounded-full px-3 py-1 text-xs"><i class="fa-solid fa-bolt mr-2"></i>Seconds, not minutes</span>
+
+        <span class="chip rounded-full px-3 py-1 text-xs"><i class="fa-solid fa-lock mr-2"></i>Privacy-first by design</span>
+
+        <span class="chip rounded-full px-3 py-1 text-xs"><i class="fa-solid fa-globe mr-2"></i>Global scam protection</span>
+
+      </div>
+
+
+
+      <div class="mt-6 grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+
+        <div class="lg:col-span-7">
+
+          <h1 id="heroTitle" class="text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight">
+
+            <span class="gold-text">VoiceSafe</span><br />
+
+            Your Guardian <span class="gold-text">Against Voice Scams</span>
+
+          </h1>
+
+
+
+          <p id="heroDesc" class="mt-4 text-base sm:text-lg muted max-w-2xl">
+
+            Upload a voice message. Know in seconds if its trying to scam you  <span class="text-white/90 font-semibold">before you send money</span>.
+
+            Get a clear report: scam score, AI voice probability, stress signals, and red flags.
+
+          </p>
+
+
+
+          <div class="mt-6 flex flex-wrap gap-3">
+
+            <button id="ctaAnalyze" class="btn-gold rounded-xl px-5 py-3 text-sm font-semibold" type="button">
+
+              <i class="fa-solid fa-wand-magic-sparkles mr-2"></i>Start Risk Assessment
+
+            </button>
+
+            <button id="ctaDemo" class="chip rounded-xl px-5 py-3 text-sm font-semibold hover:opacity-90" type="button">
+
+              <i class="fa-solid fa-play mr-2"></i>View Platform Demo
+
+            </button>
+
+            <button id="ctaHow" class="chip rounded-xl px-5 py-3 text-sm font-semibold hover:opacity-90" type="button">
+
+              <i class="fa-solid fa-circle-info mr-2"></i>Explore Methodology
+
+            </button>
+
+          </div>
+
+
+
+          <div class="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
+
+            <div class="chip rounded-2xl p-4">
+
+              <div class="text-xs muted">Storage posture</div>
+
+              <div class="mt-1 text-lg font-bold">No permanent storage</div>
+
+              <div class="mt-1 text-xs muted">Designed for privacy</div>
+
+            </div>
+
+            <div class="chip rounded-2xl p-4">
+
+              <div class="text-xs muted">Output</div>
+
+              <div class="mt-1 text-lg font-bold">Clear risk signals</div>
+
+              <div class="mt-1 text-xs muted">Human-readable summary</div>
+
+            </div>
+
+            <div class="chip rounded-2xl p-4">
+
+              <div class="text-xs muted">Use case</div>
+
+              <div class="mt-1 text-lg font-bold">Before paying</div>
+
+              <div class="mt-1 text-xs muted">Verify with official channels</div>
+
+            </div>
+
+          </div>
+
+
+
+          <div class="mt-5 text-xs muted">
+
+            Joined early access: <span id="waitlistCountTop" class="text-white/90 font-semibold">0</span>
+
+            <span class="opacity-40"></span>
+
+            <span id="waitlistUrgency">Early Access is open now.</span>
+
+            <span class="opacity-40"></span>
+
+            <span class="kbd">Tip:</span> Press <span class="kbd">D</span> for demo
+
+          </div>
+
+        </div>
+
+
+
+        <div class="lg:col-span-5 grid gap-3">
+
+          <button id="joinWaitlistBtn" class="chip rounded-2xl p-5 text-left hover:opacity-90" type="button">
+
+            <div class="text-sm font-semibold"><i class="fa-solid fa-fire mr-2"></i>Join Early Access</div>
+
+            <div class="mt-1 text-xs muted">Helps prioritize features and builds credibility with investors.</div>
+
+          </button>
+
+
+
+          <div class="glass-soft rounded-2xl p-5">
+
+            <div class="text-sm font-semibold">Safety note</div>
+
+            <div class="mt-2 text-xs muted leading-6">
+
+              VoiceSafe provides advisory signals. If money is involved, always verify via an official number
+
+              (bank, company website, known contact).
+
+            </div>
+
+          </div>
+
+
+
+          <!-- Debug only when ?debug=1 -->
+
+          <div id="debugCard" class="glass-soft rounded-2xl p-5 hidden">
+
+            <div class="flex items-start justify-between gap-3">
+
+              <div class="min-w-0">
+
+                <div class="text-sm font-semibold">System status</div>
+
+                <div class="text-xs muted mt-1 truncate" id="backendStatus">Checking…</div>
+
+              </div>
+
+              <div class="text-right shrink-0">
+
+                <div class="text-xs muted">Mode</div>
+
+                <div class="text-sm font-semibold gold-text" id="modeLabel">PROD</div>
+
+              </div>
+
+            </div>
+
+            <div class="mt-3 text-xs muted break-all"><span class="mono" id="backendUrl"></span></div>
+
+            <div class="mt-4 flex gap-2">
+
+              <button id="btnProd" class="chip rounded-xl px-3 py-2 text-xs font-semibold w-1/2 hover:opacity-90" type="button">PROD</button>
+
+              <button id="btnLocal" class="chip rounded-xl px-3 py-2 text-xs font-semibold w-1/2 hover:opacity-90" type="button">LOCAL</button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- MAIN: Analyzer + Results -->
+
+    <section id="analyzer" class="mt-6 sm:mt-8 grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 items-start">
+
+      <!-- LEFT -->
+
+      <div class="lg:col-span-5 glass rounded-3xl p-5 sm:p-6">
+
+        <div class="flex items-start justify-between gap-3">
+
+          <div>
+
+            <h2 class="text-lg font-semibold">Analyze a sample</h2>
+
+            <p class="muted text-sm mt-1">Upload audio/video or record a short clip.</p>
+
+          </div>
+
+          <button id="demoBtn" class="chip rounded-xl px-3 py-2 text-xs font-semibold hover:opacity-90" type="button">
+
+            <i class="fa-solid fa-bolt mr-2"></i>Demo
+
+          </button>
+
+        </div>
+
+
+
+        <div class="mt-5">
+
+          <label class="block text-sm muted mb-2" for="fileInput">Upload file</label>
+
+          <input id="fileInput" type="file" accept="audio/*,video/*" class="w-full text-sm chip rounded-xl p-3 outline-none focus-ring" />
+
+          <div class="mt-2 text-xs muted" id="fileHint">No file selected.</div>
+
+        </div>
+
+
+
+        <div class="mt-5 grid grid-cols-2 gap-3">
+
+          <button id="recordBtn" type="button" class="chip rounded-xl px-4 py-3 text-sm font-semibold hover:opacity-90">
+
+            <i class="fa-solid fa-microphone mr-2"></i>Record
+
+          </button>
+
+          <button id="analyzeBtn" type="button" class="btn-gold rounded-xl px-4 py-3 text-sm font-extrabold">
+
+            <i class="fa-solid fa-wand-magic-sparkles mr-2"></i>Analyze
+
+          </button>
+
+        </div>
+
+
+
+        <div class="mt-4 text-xs muted">
+
+          Free 3 analyses  No signup required  Privacy-first
+
+          <div class="mt-2 leading-6">
+
+            ?? No permanent voice storage (prototype)<br/>
+
+            ? Instant risk assessment<br/>
+
+            ???? GDPR-ready posture
+
+          </div>
+
+        </div>
+
+
+
+        <div class="mt-6 divider pt-5">
+
+          <h3 class="text-sm font-semibold">Case details (optional)</h3>
+
+          <p class="muted text-xs mt-1">Saved cases can be searched & shared (if backend supports it).</p>
+
+
+
+          <div class="mt-4 space-y-3">
+
+            <input id="title" class="w-full chip rounded-xl p-3 text-sm outline-none focus-ring" placeholder="Title (e.g. Telegram investor)" />
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+
+              <input id="platform" class="w-full chip rounded-xl p-3 text-sm outline-none focus-ring" placeholder="Platform (Telegram)" />
+
+              <input id="country" class="w-full chip rounded-xl p-3 text-sm outline-none focus-ring" placeholder="Country (US)" />
+
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+
+              <input id="language" class="w-full chip rounded-xl p-3 text-sm outline-none focus-ring" placeholder="Language (EN)" />
+
+              <input id="tags" class="w-full chip rounded-xl p-3 text-sm outline-none focus-ring" placeholder="Tags (comma separated)" />
+
+            </div>
+
+            <textarea id="notes" rows="3" class="w-full chip rounded-xl p-3 text-sm outline-none focus-ring" placeholder="Notes (what happened)"></textarea>
+
+          </div>
+
+
+
+          <div class="mt-4 text-xs muted">Tip: Keep personal data out of notes.</div>
+
+        </div>
+
+
+
+        <div class="mt-5 chip rounded-2xl p-4 text-xs muted">
+
+          <div class="font-semibold text-white/90">Disclaimer</div>
+
+          <div class="mt-1">Scores are prototypes and can be wrong. Always verify identity using official channels.</div>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- RIGHT -->
+
+      <div id="resultsCard" class="lg:col-span-7 glass rounded-3xl p-5 sm:p-6 risk-ring risk-border" data-risk="LOW">
+
+        <div class="text-xs muted tracking-widest uppercase">AI Risk Assessment</div>
+
+
+
+        <div class="mt-2 flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+
+          <div class="min-w-0">
+
+            <h2 class="text-2xl font-extrabold">Results</h2>
+
+            <p class="muted text-sm mt-1" id="resultsSub">Upload or record to generate a report.</p>
+
+
+
+            <div class="mt-3 inline-flex items-center gap-2 chip rounded-full px-3 py-1 text-xs font-semibold">
+
+              <span class="muted">Risk level:</span>
+
+              <span id="riskLabel" class="gold-text"></span>
+
+              <span class="opacity-40"></span>
+
+              <span class="muted">Confidence:</span>
+
+              <span id="confidenceLabel" class="text-white/90"></span>
+
+            </div>
+
+
+
+            <div class="mt-2">
+
+              <span id="riskBadge" class="risk-badge" data-risk="LOW">
+
+                <i class="fa-solid fa-shield-halved"></i>
+
+                <span id="riskBadgeText">LOW RISK</span>
+
+              </span>
+
+            </div>
+
+          </div>
+
+
+
+          <div class="flex items-center gap-2 flex-wrap">
+
+            <button id="copyJsonBtn" class="chip rounded-xl px-4 py-2 text-sm font-semibold hover:opacity-90" type="button">
+
+              <i class="fa-regular fa-copy mr-2"></i>Copy JSON
+
+            </button>
+
+            <button id="shareBtn" class="chip rounded-xl px-4 py-2 text-sm font-semibold hover:opacity-90" type="button" disabled>
+
+              <i class="fa-solid fa-link mr-2"></i>Copy share link
+
+            </button>
+
+            <button id="shareSocialBtn" class="chip rounded-xl px-4 py-2 text-sm font-semibold hover:opacity-90" type="button" disabled>
+
+              <i class="fa-solid fa-arrow-up-right-from-square mr-2"></i>Share
+
+            </button>
+
+
+
+            <button id="shareCardBtn" class="chip rounded-xl px-4 py-2 text-sm font-semibold">
+
+            <i class="fa-solid fa-id-card mr-2"></i>Share card
+
+            </button>
+
+
+
+            <button id="upgradeBtn" class="btn-gold rounded-xl px-4 py-2 text-sm font-extrabold" type="button">
+
+              <i class="fa-solid fa-rocket mr-2"></i>Unlock Pro  €9/month
+
+            </button>
+
+            <button id="manageSubBtn" class="chip rounded-xl px-4 py-2 text-sm hover:opacity-90" type="button">
+
+              Manage subscription
+
+            </button>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- ACTION BOX -->
+
+        <div id="actionBox" class="mt-4 glass-soft rounded-2xl p-4 sm:p-5">
+
+          <div class="flex items-start justify-between gap-3">
+
+            <div class="min-w-0">
+
+              <div class="text-xs muted tracking-widest uppercase">Recommended action</div>
+
+              <div class="mt-1 text-lg font-extrabold" id="actionTitle"></div>
+
+              <div class="mt-2 text-sm muted leading-6" id="actionText">Run an analysis to generate guidance.</div>
+
+            </div>
+
+            <div class="shrink-0">
+
+              <span id="actionPill" class="chip rounded-full px-3 py-1 text-xs font-extrabold"></span>
+
+            </div>
+
+          </div>
+
+
+
+          <div class="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
+
+            <div class="chip rounded-xl p-3">
+
+              <div class="font-semibold">1) Pause</div>
+
+              <div class="muted mt-1">Stop payment / sensitive steps</div>
+
+            </div>
+
+            <div class="chip rounded-xl p-3">
+
+              <div class="font-semibold">2) Verify</div>
+
+              <div class="muted mt-1">Call an official number</div>
+
+            </div>
+
+            <div class="chip rounded-xl p-3">
+
+              <div class="font-semibold">3) Escalate</div>
+
+              <div class="muted mt-1">Share case + export JSON</div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+
+        <div class="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
+
+          <div class="chip rounded-2xl p-4">
+
+            <div class="text-xs muted">Scam score</div>
+
+            <div class="mt-1 text-3xl font-extrabold"><span id="scamScore"></span><span class="text-base muted">%</span></div>
+
+            <div class="mt-3 bar"><div id="scamBar"></div></div>
+
+          </div>
+
+          <div class="chip rounded-2xl p-4">
+
+            <div class="text-xs muted">AI voice probability</div>
+
+            <div class="mt-1 text-3xl font-extrabold"><span id="aiProb"></span><span class="text-base muted">%</span></div>
+
+            <div class="mt-3 bar"><div id="aiBar"></div></div>
+
+          </div>
+
+          <div class="chip rounded-2xl p-4">
+
+            <div class="text-xs muted">Stress level</div>
+
+            <div class="mt-1 text-3xl font-extrabold"><span id="stressLevel"></span><span class="text-base muted">%</span></div>
+
+            <div class="mt-3 bar"><div id="stressBar"></div></div>
+
+          </div>
+
+        </div>
+
+
+
+        <div class="mt-5 chip rounded-2xl p-5">
+
+          <div class="text-xs muted">Summary</div>
+
+          <div class="mt-2 text-slate-100 text-sm sm:text-base" id="summaryText">Upload or record a sample to see results.</div>
+
+          <div class="mt-3 flex flex-wrap gap-2" id="flagsWrap"></div>
+
+        </div>
+
+
+
+        <div class="mt-5 grid grid-cols-1 md:grid-cols-2 gap-4">
+
+          <div class="chip rounded-2xl p-5">
+
+            <div class="text-sm font-semibold">Saved case</div>
+
+            <div class="mt-2 text-xs muted">Case ID</div>
+
+            <div class="mt-1 mono text-sm break-all" id="caseId"></div>
+
+            <div class="mt-3 flex gap-2 items-center">
+
+              <button id="copyCaseLinkBtn" type="button" class="chip rounded-xl px-3 py-2 text-xs font-semibold hover:opacity-90">
+
+                ?? Copy share link
+
+              </button>
+
+              <span id="copyToast" class="text-xs muted hidden">Link copied ?</span>
+
+            </div>
+
+            <div class="mt-3 text-xs muted" id="caseSavedHint">Analyze a sample to create a case.</div>
+
+          </div>
+
+
+
+          <div class="chip rounded-2xl p-5">
+
+            <div class="text-sm font-semibold">Search cases</div>
+
+            <div class="mt-3 flex gap-2">
+
+              <input id="searchQ" class="flex-1 chip rounded-xl p-3 text-sm outline-none focus-ring min-w-0" placeholder="Search title / notes..." />
+
+              <button id="searchBtn" type="button" class="btn-gold rounded-xl px-4 py-3 text-sm font-extrabold shrink-0">Search</button>
+
+            </div>
+
+            <div class="mt-3 flex gap-2">
+
+              <input id="searchTag" class="flex-1 chip rounded-xl p-3 text-sm outline-none focus-ring min-w-0" placeholder="Tag filter (optional)" />
+
+              <button id="clearBtn" type="button" class="chip rounded-xl px-4 py-3 text-sm font-semibold hover:opacity-90 shrink-0">Clear</button>
+
+            </div>
+
+            <div class="mt-4 pr-1 overflow-auto" id="resultsList" style="max-height:min(46vh,360px);"></div>
+
+          </div>
+
+        </div>
+
+
+
+        <pre class="mt-5 chip rounded-2xl p-4 text-xs overflow-auto hidden" id="rawJson" style="max-height:min(40vh,320px);"></pre>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- FAQ -->
+
+    <section id="faq" class="mt-10 glass-soft rounded-3xl p-6 sm:p-7">
+
+      <h3 class="text-xl font-extrabold">How it works</h3>
+
+      <div class="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
+
+        <div class="chip rounded-2xl p-4">
+
+          <div class="text-xs muted">1) Input</div>
+
+          <div class="mt-1 font-semibold">Upload or record</div>
+
+          <div class="mt-1 text-xs muted">Audio/video supported</div>
+
+        </div>
+
+        <div class="chip rounded-2xl p-4">
+
+          <div class="text-xs muted">2) Analysis</div>
+
+          <div class="mt-1 font-semibold">Risk scoring</div>
+
+          <div class="mt-1 text-xs muted">Signals + probabilities</div>
+
+        </div>
+
+        <div class="chip rounded-2xl p-4">
+
+          <div class="text-xs muted">3) Action</div>
+
+          <div class="mt-1 font-semibold">Verify</div>
+
+          <div class="mt-1 text-xs muted">Use official channels</div>
+
+        </div>
+
+      </div>
+
+      <p class="mt-4 text-sm muted leading-6">
+
+        VoiceSafe is a prototype. Scores can be wrong  treat the report as an early warning system.
+
+        When money is involved, always verify the caller via trusted, official contact methods.
+
+      </p>
+
+    </section>
+
+
+
+    <div class="mt-10 text-center text-xs muted">
+
+      VoiceSafe  Early Access  Built for global anti-scam awareness  <span class="mono">voicesafe.ai</span>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- HOW MODAL -->
+
+  <div id="howModal" class="fixed inset-0 hidden items-center justify-center z-50">
+
+    <div id="howBackdrop" class="absolute inset-0 bg-black/60"></div>
+
+    <div class="relative w-[92%] max-w-2xl rounded-3xl border border-white/10 bg-[#0b0f14] p-6 sm:p-7 shadow-xl">
+
+      <div class="flex items-start justify-between gap-4">
+
+        <div>
+
+          <h3 class="text-xl font-extrabold">How VoiceSafe works</h3>
+
+          <p class="mt-1 text-sm muted">Clear output, fast workflow, minimal friction.</p>
+
+        </div>
+
+        <button id="howClose" class="rounded-xl px-3 py-2 text-sm chip hover:opacity-90" type="button">?</button>
+
+      </div>
+
+      <div class="mt-5 text-sm muted leading-6">
+
+        Upload or record a short sample. VoiceSafe returns a risk report with:
+
+        scam score, AI voice probability, stress level, and red flags.
+
+      </div>
+
+      <div class="mt-6 flex flex-col sm:flex-row gap-2">
+
+        <button id="howTryDemo" class="btn-gold rounded-xl px-4 py-3 text-sm font-extrabold w-full sm:w-auto" type="button">
+
+          <i class="fa-solid fa-play mr-2"></i>Load demo
+
+        </button>
+
+        <button id="howGoAnalyze" class="chip rounded-xl px-4 py-3 text-sm font-semibold hover:opacity-90 w-full sm:w-auto" type="button">
+
+          <i class="fa-solid fa-wand-magic-sparkles mr-2"></i>Go to analyzer
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- PAYWALL MODAL -->
+
+  <div id="paywallModal" class="fixed inset-0 hidden items-center justify-center z-50">
+
+    <div id="paywallBackdrop" class="absolute inset-0 bg-black/60"></div>
+
+    <div class="relative w-[92%] max-w-lg rounded-3xl border border-white/10 bg-[#0b0f14] p-6 shadow-xl">
+
+      <div class="flex items-start justify-between gap-4">
+
+        <div>
+
+          <h3 class="text-xl font-extrabold">Free limit reached</h3>
+
+          <p class="mt-1 text-sm muted">Upgrade to Pro to continue analyzing.</p>
+
+        </div>
+
+        <button id="paywallClose" class="rounded-xl px-3 py-2 text-sm chip hover:opacity-90" type="button">?</button>
+
+      </div>
+
+      <div class="mt-4 grid gap-2 text-sm opacity-90">
+
+        <div>? Unlimited analyses</div>
+
+        <div>? Priority processing</div>
+
+        <div>? Case history & sharing</div>
+
+      </div>
+
+      <div class="mt-6 flex flex-col gap-2">
+
+        <button id="paywallCta" class="btn-gold rounded-xl px-4 py-3 text-sm font-extrabold w-full" type="button">Start Pro  €9/month</button>
+
+        <button id="paywallWaitlist" class="chip rounded-xl px-4 py-3 text-sm font-semibold hover:opacity-90 w-full" type="button">Join early access</button>
+
+        <p id="waitlistCountText" class="mt-2 text-xs muted text-center"></p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- TOAST -->
+
+  <div id="toast" class="fixed bottom-4 left-1/2 -translate-x-1/2 hidden z-[60]">
+
+    <div class="chip gold-border rounded-2xl px-4 py-3 text-sm shadow-xl">
+
+      <span id="toastMsg"></span>
+
+    </div>
+
+  </div>
+
+
+
+</script>
+
+    // ===========================
+
+    // CONFIG
+
+    // ===========================
+
+
+      // DOM
+
+      const fileInput = $("fileInput");
+
+      const analyzeBtn = $("analyzeBtn");
+
+      const demoBtn = $("demoBtn");
+
+      const recordBtn = $("recordBtn");
+
+      const fileHint = $("fileHint");
+
+
+
+      const scamScoreEl = $("scamScore");
+
+      const aiProbEl = $("aiProb");
+
+      const stressLevelEl = $("stressLevel");
+
+      const summaryText = $("summaryText");
+
+      const flagsWrap = $("flagsWrap");
+
+      const rawJson = $("rawJson");
+
+
+
+      const scamBar = $("scamBar");
+
+      const aiBar = $("aiBar");
+
+      const stressBar = $("stressBar");
+
+
+
+      const copyJsonBtn = $("copyJsonBtn");
+
+      const shareBtn = $("shareBtn");
+
+      const shareSocialBtn = $("shareSocialBtn");
+
+
+
+      const upgradeBtn = $("upgradeBtn");
+
+      const manageSubBtn = $("manageSubBtn");
+
+
+
+      const caseIdEl = $("caseId");
+
+      const caseSavedHint = $("caseSavedHint");
+
+
+
+      const copyCaseLinkBtn = $("copyCaseLinkBtn");
+
+      const copyToast = $("copyToast");
+
+
+
+      const searchQ = $("searchQ");
+
+      const searchTag = $("searchTag");
+
+      const searchBtn = $("searchBtn");
+
+      const clearBtn = $("clearBtn");
+
+      const resultsList = $("resultsList");
+
+
+
+      const titleEl = $("title");
+
+      const platformEl = $("platform");
+
+      const countryEl = $("country");
+
+      const languageEl = $("language");
+
+      const tagsEl = $("tags");
+
+      const notesEl = $("notes");
+
+
+
+      const btnProd = $("btnProd");
+
+      const btnLocal = $("btnLocal");
+
+      const backendStatus = $("backendStatus");
+
+      const backendUrl = $("backendUrl");
+
+      const modeLabel = $("modeLabel");
+
+
+
+      const ctaAnalyze = $("ctaAnalyze");
+
+      const ctaDemo = $("ctaDemo");
+
+      const ctaHow = $("ctaHow");
+
+
+
+      const joinWaitlistBtn = $("joinWaitlistBtn");
+
+      const howModal = $("howModal");
+
+      const paywallModal = $("paywallModal");
+
+
+
+      const toneToggle = $("toneToggle");
+
+
+
+      // Debug only ?debug=1
+
+      (function initDebug(){
+
+        const u = new URL(window.location.href);
+
+        if (u.searchParams.get("debug") === "1") $("debugCard")?.classList.remove("hidden");
+
+      })();
+
+
+
+      // State
+
+      let backendBase = window.URLS.PROD;
+
+      let lastResponse = null;
+
+      let lastCaseId = null;
+
+      let progressInterval = null;
+
+
+
+      // Recorder
+
+      let mediaRecorder = null;
+
+      let recordedChunks = [];
+
+      let recording = false;
+
+      let recordStream = null;
+
+
+
+      // ===========================
+
+      // Helpers
+
+      // ===========================
+
+      function toast(msg){
+
+        const t = $("toast");
+
+        const m = $("toastMsg");
+
+        if (!t || !m) return;
+
+        m.textContent = msg;
+
+        t.classList.remove("hidden");
+
+        clearTimeout(toast._timer);
+
+        toast._timer = setTimeout(() => t.classList.add("hidden"), 2200);
+
+      }
+
+
+
+      function lockScroll(lock){
+
+        document.body.style.overflow = lock ? "hidden" : "";
+
+        document.documentElement.style.overflow = lock ? "hidden" : "";
+
+      }
+
+
+
+      function clampPct(v){
+
+        const n = Number(v);
+
+        if (!Number.isFinite(n)) return 0;
+
+        return Math.max(0, Math.min(100, n));
+
+      }
+
+
+
+      function setBars(scam, ai, stress){
+
+        if (scamBar) scamBar.style.width = clampPct(scam) + "%";
+
+        if (aiBar) aiBar.style.width = clampPct(ai) + "%";
+
+        if (stressBar) stressBar.style.width = clampPct(stress) + "%";
+
+      }
+
+
+
+      function normalizeFlags(flags){
+
+        if (!flags) return [];
+
+        if (Array.isArray(flags)) return flags.filter(Boolean).slice(0, 12);
+
+        if (typeof flags === "string") return flags.split(",").map(s => s.trim()).filter(Boolean).slice(0, 12);
+
+        return [];
+
+      }
+
+
+
+      function pickNumber(obj, keys, fallback = 0){
+
+        for (const k of keys){
+
+          const val = obj?.[k];
+
+          if (val === undefined || val === null || val === "") continue;
+
+          const n = Number(val);
+
+          if (Number.isFinite(n)) return n;
+
+        }
+
+        return fallback;
+
+      }
+
+
+
+      function pickText(obj, keys, fallback = ""){
+
+        for (const k of keys){
+
+          const val = obj?.[k];
+
+          if (typeof val === "string" && val.trim()) return val.trim();
+
+        }
+
+        return fallback;
+
+      }
+
+
+
+      function scrollToId(id){
+
+        const el = document.getElementById(id);
+
+        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+
+      }
+
+
+
+      function safeIsTyping(){
+
+        const el = document.activeElement;
+
+        if (!el) return false;
+
+        const tag = el.tagName?.toLowerCase();
+
+        return tag === "input" || tag === "textarea" || el.isContentEditable === true;
+
+      }
+
+
+
+      async function copyTextToClipboard(text){
+
+        try {
+
+          await navigator.clipboard.writeText(text);
+
+          return true;
+
+        } catch {
+
+          try {
+
+            const ta = document.createElement("textarea");
+
+            ta.value = text;
+
+            ta.style.position = "fixed";
+
+            ta.style.left = "-9999px";
+
+            ta.style.top = "-9999px";
+
+            document.body.appendChild(ta);
+
+            ta.select();
+
+            document.execCommand("copy");
+
+            document.body.removeChild(ta);
+
+            return true;
+
+          } catch {
+
+            return false;
+
+          }
+
+        }
+
+      }
+
+
+
+      function showInlineCopyToast(){
+
+        if (!copyToast) return;
+
+        copyToast.classList.remove("hidden");
+
+        clearTimeout(window.__copyToastT);
+
+        window.__copyToastT = setTimeout(() => copyToast.classList.add("hidden"), 1200);
+
+      }
+
+
+
+      function riskFromScore(s){
+
+        const n = clampPct(s);
+
+        if (n >= 85) return "CRITICAL";
+
+        if (n >= 70) return "HIGH";
+
+        if (n >= 45) return "ELEVATED";
+
+        if (n >= 25) return "GUARDED";
+
+        return "LOW";
+
+      }
+
+
+
+      function confidenceFromSignals(ai, stress){
+
+        const c = Math.max(clampPct(ai), clampPct(stress));
+
+        if (c >= 85) return "High";
+
+        if (c >= 60) return "Medium";
+
+        return "Low";
+
+      }
+
+
+
+      function actionFromRisk(level){
+
+        switch(level){
+
+          case "CRITICAL":
+
+            return { pill:"HOLD + ESCALATE", title:"Stop the process. Treat as probable fraud.", text:"Do not send money or share codes. Verify identity via an official number. Escalate internally and attach the case report (share link + JSON)." };
+
+          case "HIGH":
+
+            return { pill:"VERIFY NOW", title:"High-risk indicators detected.", text:"Pause any transaction. Verify via an official channel (bank/company website). If pressure continues, escalate and share the report." };
+
+          case "ELEVATED":
+
+            return { pill:"VERIFY", title:"Elevated risk. Proceed only with verification.", text:"Continue only after verification through a trusted channel. Avoid links, remote access tools, and urgent payment requests." };
+
+          case "GUARDED":
+
+            return { pill:"CAUTION", title:"Lower risk signal, but stay cautious.", text:"No strong fraud pattern detected, but still verify if money, account access, or personal data is involved." };
+
+          default:
+
+            return { pill:"OK", title:"No strong risk pattern detected.", text:"Treat as informational. If anything feels off, verify via official channels before acting." };
+
+        }
+
+      }
+
+
+
+      function setResultUI(payload){
+
+        const src = payload || {};
+
+        const scam = pickNumber(src, ["scam_score","scamScore","risk","risk_score"], 0);
+
+        const ai = pickNumber(src, ["ai_probability","aiProb","ai_voice_probability","aiVoiceProbability"], 0);
+
+        const stress = pickNumber(src, ["stress_level","stressLevel","stress","stress_score"], 0);
+
+        const summary = pickText(src, ["summary","explanation","message"], "Analysis complete.");
+
+        const flags = normalizeFlags(src.flags || src.signals || src.red_flags || src.redFlags);
+
+
+
+        // Numbers
+
+        if (scamScoreEl) scamScoreEl.textContent = String(Math.round(clampPct(scam)));
+
+        if (aiProbEl) aiProbEl.textContent = String(Math.round(clampPct(ai)));
+
+        if (stressLevelEl) stressLevelEl.textContent = String(Math.round(clampPct(stress)));
+
+        if (summaryText) summaryText.textContent = summary;
+
+
+
+        // Flags
+
+        if (flagsWrap){
+
+          flagsWrap.innerHTML = "";
+
+          flags.forEach(f => {
+
+            const chip = document.createElement("span");
+
+            chip.className = "chip rounded-full px-3 py-1 text-xs";
+
+            chip.textContent = f;
+
+            flagsWrap.appendChild(chip);
+
+          });
+
+        }
+
+
+
+        // Bars
+
+        setBars(scam, ai, stress);
+
+
+
+        // Risk UI
+
+        const risk = riskFromScore(scam);
+
+        const confidence = confidenceFromSignals(ai, stress);
+
+
+
+        const resultsCard = $("resultsCard");
+
+        const riskBadge = $("riskBadge");
+
+        const riskBadgeText = $("riskBadgeText");
+
+        const riskLabelEl = $("riskLabel");
+
+        const confidenceEl = $("confidenceLabel");
+
+
+
+        if (resultsCard) resultsCard.setAttribute("data-risk", risk);
+
+        if (riskBadge) riskBadge.setAttribute("data-risk", risk);
+
+        if (riskBadgeText){
+
+          const map = { LOW:"LOW RISK", GUARDED:"GUARDED", ELEVATED:"ELEVATED", HIGH:"HIGH RISK", CRITICAL:"CRITICAL" };
+
+          riskBadgeText.textContent = map[risk] || "RISK";
+
+        }
+
+        if (riskLabelEl) riskLabelEl.textContent = risk;
+
+        if (confidenceEl) confidenceEl.textContent = confidence;
+
+
+
+        // Recommended action
+
+        const action = actionFromRisk(risk);
+
+        $("actionPill") && ($("actionPill").textContent = action.pill);
+
+        $("actionTitle") && ($("actionTitle").textContent = action.title);
+
+        $("actionText") && ($("actionText").textContent = action.text);
+
+
+
+        // Enable share buttons
+
+        [shareBtn, shareSocialBtn].forEach(b => {
+
+          if (!b) return;
+
+          b.disabled = false;
+
+          b.removeAttribute("disabled");
+
+          b.style.pointerEvents = "auto";
+
+          b.style.cursor = "pointer";
+
+        });
+
+      }
+
+
+
+      // ===========================
+
+      // Modals
+
+      // ===========================
+
+      function openHow(){ if (!howModal) return; howModal.classList.remove("hidden"); howModal.classList.add("flex"); lockScroll(true); }
+
+      function closeHow(){ if (!howModal) return; howModal.classList.add("hidden"); howModal.classList.remove("flex"); lockScroll(false); }
+
+      function openPaywall(){ if (!paywallModal) return; paywallModal.classList.remove("hidden"); paywallModal.classList.add("flex"); lockScroll(true); renderWaitlistCount(); }
+
+      function closePaywall(){ if (!paywallModal) return; paywallModal.classList.add("hidden"); paywallModal.classList.remove("flex"); lockScroll(false); }
+
+
+
+      $("howBackdrop")?.addEventListener("click", closeHow);
+
+      $("howClose")?.addEventListener("click", closeHow);
+
+      $("paywallBackdrop")?.addEventListener("click", closePaywall);
+
+      $("paywallClose")?.addEventListener("click", closePaywall);
+
+
+
+      document.addEventListener("keydown", (e) => {
+
+        if (e.key === "Escape") {
+
+          if (paywallModal && !paywallModal.classList.contains("hidden")) closePaywall();
+
+          else if (howModal && !howModal.classList.contains("hidden")) closeHow();
+
+        }
+
+      });
+
+
+
+      // ===========================
+
+      // Demo
+
+      // ===========================
+
+      function loadDemoResult(){
+
+        localStorage.setItem("vs_demo", "true");
+
+        const demo = {
+
+          scam_score: 82,
+
+          ai_probability: 91,
+
+          stress_level: 67,
+
+          summary: "High likelihood of AI-generated impersonation with financial manipulation intent. Verify identity through an official number before sending money.",
+
+          flags: [
+
+            "AI voice synthesis detected (prototype)",
+
+            "Urgency / pressure language (prototype)",
+
+            "Financial request pattern (prototype)",
+
+            "Emotional manipulation markers (prototype)"
+
+          ]
+
+        };
+
+        lastResponse = demo;
+
+        lastCaseId = "demo";
+
+        if (caseIdEl) caseIdEl.textContent = "demo";
+
+        if (caseSavedHint) caseSavedHint.textContent = "Demo case (local).";
+
+        setResultUI(demo);
+
+        if (rawJson){
+
+          rawJson.textContent = JSON.stringify(demo, null, 2);
+
+          rawJson.classList.remove("hidden");
+
+        }
+
+        toast("Demo loaded ?");
+
+        scrollToId("resultsCard");
+
+      }
+
+
+
+      document.addEventListener("keydown", (e) => {
+
+        if (safeIsTyping()) return;
+
+        if (e.key && e.key.toLowerCase() === "d") loadDemoResult();
+
+      });
+
+
+
+      // ===========================
+
+      // Waitlist (local)
+
+      // ===========================
+
+      function renderWaitlistCount(){
+
+        const count = Number(localStorage.getItem("waitlist") || 0);
+
+        $("waitlistCountTop") && ($("waitlistCountTop").textContent = String(count));
+
+        $("waitlistCountBadge") && ($("waitlistCountBadge").textContent = String(count));
+
+        $("waitlistCountText") && ($("waitlistCountText").textContent = `Total Early Access joins: ${count}`);
+
+      }
+
+      function joinEarlyAccess(){
+
+        const count = Number(localStorage.getItem("waitlist") || 0) + 1;
+
+        localStorage.setItem("waitlist", String(count));
+
+        renderWaitlistCount();
+
+        toast("Joined Early Access ?");
+
+      }
+
+      renderWaitlistCount();
+
+
+
+      joinWaitlistBtn?.addEventListener("click", joinEarlyAccess);
+
+      $("paywallWaitlist")?.addEventListener("click", () => { joinEarlyAccess(); closePaywall(); });
+
+
+
+      (function simulateLiveJoins(){
+
+        const el = $("liveActivity");
+
+        if (!el) return;
+
+        const cities = ["Vienna", "Warsaw", "Amsterdam", "Paris", "Madrid", "New York", "Toronto", "Bratislava"];
+
+        setInterval(() => {
+
+          const city = cities[Math.floor(Math.random() * cities.length)];
+
+          const seconds = Math.floor(Math.random() * 40) + 5;
+
+          el.textContent = `?? Someone from ${city} joined ${seconds}s ago`;
+
+        }, 6500);
+
+      })();
+
+
+
+      // ===========================
+
+      // Hero buttons
+
+      // ===========================
+
+      ctaHow?.addEventListener("click", openHow);
+
+      $("howTryDemo")?.addEventListener("click", () => { closeHow(); loadDemoResult(); });
+
+      $("howGoAnalyze")?.addEventListener("click", () => { closeHow(); scrollToId("analyzer"); });
+
+
+
+      ctaAnalyze?.addEventListener("click", () => scrollToId("analyzer"));
+
+      ctaDemo?.addEventListener("click", loadDemoResult);
+
+      demoBtn?.addEventListener("click", loadDemoResult);
+
+
+
+      // ===========================
+
+      // Stripe buttons
+
+      // ===========================
+
+      upgradeBtn?.addEventListener("click", () => window.location.href = window.STRIPE_CHECKOUT_URL);
+
+      $("paywallCta")?.addEventListener("click", () => window.location.href = window.STRIPE_CHECKOUT_URL);
+
+
+
+      // Billing portal (optional endpoint)
+
+      manageSubBtn?.addEventListener("click", async () => {
+
+        const customerId = localStorage.getItem("voicesafe_customer_id");
+
+        if (!customerId) { toast("No active subscription found."); return; }
+
+        try {
+
+          const r = await fetch(`${backendBase}/create-portal-session`, {
+
+            method: "POST",
+
+            headers: { "Content-Type": "application/json" },
+
+            body: JSON.stringify({ customerId }),
+
+          });
+
+          const data = await r.json().catch(() => ({}));
+
+          if (data?.ok && data?.url) window.location.href = data.url;
+
+          else toast("Could not open billing portal.");
+
+        } catch (e) {
+
+          console.error("PORTAL ERROR:", e);
+
+          toast("Billing portal error.");
+
+        }
+
+      });
+
+
+
+      // ===========================
+
+      // Mode + backend health (debug only)
+
+      // ===========================
+
+      function setStatus(text){ if (backendStatus) backendStatus.textContent = text; }
+
+
+
+      async function checkBackend(){
+
+        try {
+
+          const r = await fetch(`${backendBase}/health`, { cache: "no-store" });
+
+          if (!r.ok) throw new Error("health not ok");
+
+          const j = await r.json().catch(() => ({}));
+
+          const aiOk = (j.ai_ok === true);
+
+          setStatus(`${aiOk ? "OK" : "Degraded"}  AI_OK: ${String(j.ai_ok ?? "n/a")}`.trim());
+
+        } catch {
+
+          setStatus("Offline / blocked (check URL, CORS, or server)");
+
+        }
+
+      }
+
+
+
+      function setMode(mode){
+
+        backendBase = window.URLS[mode] || backendBase;
+
+        if (backendUrl) backendUrl.textContent = backendBase;
+
+        if (modeLabel) modeLabel.textContent = mode;
+
+        toast(`Mode: ${mode}`);
+
+        checkBackend();
+
+      }
+
+
+
+      btnProd?.addEventListener("click", () => setMode("PROD"));
+
+      btnLocal?.addEventListener("click", () => setMode("LOCAL"));
+
+      setMode("PROD");
+
+
+
+      // ===========================
+
+      // File selection
+
+      // ===========================
+
+      fileInput?.addEventListener("change", () => {
+
+        const f = fileInput.files && fileInput.files[0];
+
+        if (!fileHint) return;
+
+        fileHint.textContent = f ? `Selected: ${f.name} (${Math.round(f.size / 1024)} KB)` : "No file selected.";
+
+      });
+
+
+
+      // ===========================
+
+      // Record microphone
+
+      // ===========================
+
+      recordBtn?.addEventListener("click", async () => {
+
+        try {
+
+          if (!recording) {
+
+            recordStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+
+            recordedChunks = [];
+
+            mediaRecorder = new MediaRecorder(recordStream);
+
+
+
+            mediaRecorder.ondataavailable = (e) => {
+
+              if (e.data && e.data.size > 0) recordedChunks.push(e.data);
+
+            };
+
+
+
+            mediaRecorder.onstop = () => {
+
+              try {
+
+                const blob = new Blob(recordedChunks, { type: "audio/webm" });
+
+                const file = new File([blob], "mic.webm", { type: "audio/webm" });
+
+                const dt = new DataTransfer();
+
+                dt.items.add(file);
+
+                if (fileInput) fileInput.files = dt.files;
+
+                if (fileHint) fileHint.textContent = `Recorded: ${file.name} (${Math.round(file.size / 1024)} KB)`;
+
+                toast("Recording saved ?");
+
+              } catch {
+
+                toast("Could not finalize recording.");
+
+              } finally {
+
+                try { recordStream?.getTracks()?.forEach(t => t.stop()); } catch {}
+
+                recordStream = null;
+
+              }
+
+            };
+
+
+
+            mediaRecorder.start();
+
+            recording = true;
+
+            recordBtn.innerHTML = `<i class="fa-solid fa-stop mr-2"></i>Stop`;
+
+            toast("Recording…");
+
+          } else {
+
+            mediaRecorder?.stop();
+
+            recording = false;
+
+            recordBtn.innerHTML = `<i class="fa-solid fa-microphone mr-2"></i>Record`;
+
+          }
+
+        } catch {
+
+          alert("Microphone permission blocked or unavailable.");
+
+        }
+
+      });
+
+
+
+      // ===========================
+
+      // Analyze
+
+      // ===========================
+
+      analyzeBtn?.addEventListener("click", async () => {
+
+        const isPro = localStorage.getItem("voicesafe_pro") === "true";
+
+        const DEMO_MODE = localStorage.getItem("vs_demo") === "true";
+
+        const FREE_LIMIT = 3;
+
+        const usage = Number(localStorage.getItem("vs_usage") || 0);
+
+
+
+        if (!isPro && !DEMO_MODE && usage >= FREE_LIMIT){
+
+          openPaywall();
+
+          return;
+
+        }
+
+
+
+        const f = fileInput?.files?.[0];
+
+        if (!f){ toast("Select a file or record audio first."); return; }
+
+
+
+        const steps = [
+
+          "Uploading sample…",
+
+          "Analyzing voice signals…",
+
+          "Detecting AI impersonation…",
+
+          "Measuring stress markers…",
+
+          "Scanning scam patterns…",
+
+          "Finalizing report…",
+
+        ];
+
+
+
+        let stepIndex = 0;
+
+        if (summaryText) summaryText.textContent = steps[0];
+
+
+
+        if (progressInterval) clearInterval(progressInterval);
+
+        progressInterval = setInterval(() => {
+
+          stepIndex = Math.min(stepIndex + 1, steps.length - 1);
+
+          if (summaryText) summaryText.textContent = steps[stepIndex];
+
+        }, 850);
+
+
+
+        analyzeBtn.disabled = true;
+
+        analyzeBtn.innerHTML = '<i class="fa-solid fa-spinner mr-2 fa-spin"></i>Analyzing…';
+
+
+
+        if (flagsWrap) flagsWrap.innerHTML = "";
+
+        setBars(0,0,0);
+
+        rawJson?.classList.add("hidden");
+
+
+
+        const startTime = Date.now();
+
+        const MIN_TIME = 650;
+
+
+
+        try {
+
+          const form = new FormData();
+
+          form.append("file", f);
+
+          form.append("title", titleEl?.value || "");
+
+          form.append("platform", platformEl?.value || "");
+
+          form.append("country", countryEl?.value || "");
+
+          form.append("language", languageEl?.value || "");
+
+          form.append("tags", tagsEl?.value || "");
+
+          form.append("notes", notesEl?.value || "");
+
+
+
+          const resp = await fetch(`${backendBase}/upload`, { method: "POST", body: form });
+
+          const data = await resp.json().catch(() => null);
+
+
+
+          if (!resp.ok){
+
+            const msg = data?.message || data?.error || `HTTP ${resp.status}`;
+
+            if (summaryText) summaryText.textContent = `Error: ${msg}`;
+
+            toast("Analyze failed.");
+
+            console.error("UPLOAD ERROR:", data);
+
+            return;
+
+          }
+
+
+
+          if (!isPro && !DEMO_MODE){
+
+            const current = Number(localStorage.getItem("vs_usage") || 0);
+
+            localStorage.setItem("vs_usage", String(current + 1));
+
+          }
+
+
+
+          const aiResult = data?.aiResult || data?.result || data || {};
+
+          lastResponse = aiResult;
+
+          lastCaseId = data?.case_id || data?.caseId || data?.id || aiResult?.case_id || null;
+
+
+
+          if (lastCaseId){
+
+            caseIdEl && (caseIdEl.textContent = String(lastCaseId));
+
+            caseSavedHint && (caseSavedHint.textContent = "Case saved.");
+
+            const u = new URL(window.location.href);
+
+            u.searchParams.set("case", String(lastCaseId));
+
+            history.replaceState({}, "", u.toString());
+
+          } else {
+
+            caseIdEl && (caseIdEl.textContent = "");
+
+            caseSavedHint && (caseSavedHint.textContent = "No case id returned by backend.");
+
+          }
+
+
+
+          setResultUI(aiResult);
+
+
+
+          if (rawJson){
+
+            rawJson.textContent = JSON.stringify(data, null, 2);
+
+            rawJson.classList.remove("hidden");
+
+          }
+
+
+
+          toast("Analysis complete ?");
+
+          scrollToId("resultsCard");
+
+        } catch (e) {
+
+          console.error("ANALYZE ERROR:", e);
+
+          if (summaryText) summaryText.textContent = `Network error: ${e?.message || e}`;
+
+          toast("Network error.");
+
+        } finally {
+
+          const elapsed = Date.now() - startTime;
+
+          if (elapsed < MIN_TIME) await new Promise(r => setTimeout(r, MIN_TIME - elapsed));
+
+          if (progressInterval) { clearInterval(progressInterval); progressInterval = null; }
+
+          analyzeBtn.disabled = false;
+
+          analyzeBtn.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles mr-2"></i>Analyze';
+
+        }
+
+      });
+
+
+
+      // ===========================
+
+      // Copy JSON
+
+      // ===========================
+
+      copyJsonBtn?.addEventListener("click", async () => {
+
+        if (!lastResponse) { toast("No JSON yet."); return; }
+
+        const ok = await copyTextToClipboard(JSON.stringify(lastResponse, null, 2));
+
+        toast(ok ? "Copied ?" : "Clipboard blocked.");
+
+      });
+
+
+
+      // ===========================
+
+      // Share
+
+      // ===========================
+
+      function buildShareUrl(){
+
+        const shareUrl = new URL(window.location.origin + window.location.pathname);
+
+        if (lastCaseId) shareUrl.searchParams.set("case", String(lastCaseId));
+
+        else shareUrl.searchParams.set("share", "local");
+
+        return shareUrl.toString();
+
+      }
+
+
+
+      shareBtn?.addEventListener("click", async (e) => {
+
+        e.preventDefault();
+
+        if (!lastResponse){ toast("No result to share yet."); return; }
+
+        const url = buildShareUrl();
+
+        const ok = await copyTextToClipboard(url);
+
+        if (!ok) window.prompt("Copy link:", url);
+
+        toast("Share link copied ?");
+
+      });
+
+
+
+      shareSocialBtn?.addEventListener("click", async () => {
+
+        if (!lastResponse){ toast("No result to share yet."); return; }
+
+
+
+        const scam = clampPct(pickNumber(lastResponse, ["scam_score","scamScore","risk"], 0));
+
+        const ai = clampPct(pickNumber(lastResponse, ["ai_probability","aiProb","ai_voice_probability"], 0));
+
+        const stress = clampPct(pickNumber(lastResponse, ["stress_level","stressLevel","stress"], 0));
+
+        const url = buildShareUrl();
+
+
+
+        const text = `VoiceSafe report: Scam ${Math.round(scam)}%  AI voice ${Math.round(ai)}%  Stress ${Math.round(stress)}%  verify before paying.`;
+
+
+
+        if (navigator.share){
+
+          try {
+
+            await navigator.share({ title: "VoiceSafe Report", text, url });
+
+            toast("Shared ?");
+
+            return;
+
+          } catch {}
+
+        }
+
+
+
+        const ok = await copyTextToClipboard(`${text} ${url}`);
+
+        if (!ok) window.prompt("Copy:", `${text} ${url}`);
+
+        toast("Copied share text ?");
+
+      });
+
+
+
+      // Copy case link (same as share)
+
+      copyCaseLinkBtn?.addEventListener("click", async () => {
+
+        const id = (caseIdEl?.textContent || "").trim();
+
+        if (!id || id === "") { toast("No Case ID yet."); return; }
+
+        const url = buildShareUrl();
+
+        const ok = await copyTextToClipboard(url);
+
+        if (!ok) window.prompt("Copy link:", url);
+
+        showInlineCopyToast();
+
+      });
+
+
+
+      // ===========================
+
+      // Cases: Search + Load (optional backend support)
+
+      // ===========================
+
+      function escapeHtml(s){
+
+        return (s || "").replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+
+      }
+
+
+
+      function renderSearchList(items){
+
+        if (!resultsList) return;
+
+        resultsList.innerHTML = "";
+
+        if (!items || !items.length){
+
+          resultsList.innerHTML = `<div class="text-xs muted">No results.</div>`;
+
+          return;
+
+        }
+
+        items.slice(0, 25).forEach(item => {
+
+          const id = item.id || item.case_id || item._id;
+
+          const title = item?.meta?.title || item?.title || "(untitled)";
+
+          const row = document.createElement("div");
+
+          row.className = "chip rounded-xl p-3 mb-2 cursor-pointer hover:opacity-90";
+
+          row.innerHTML = `
+
+            <div class="flex items-center justify-between gap-3">
+
+              <div class="min-w-0">
+
+                <div class="text-sm font-semibold truncate">${escapeHtml(title)}</div>
+
+                <div class="text-[11px] muted mono break-all mt-1">${escapeHtml(id || "")}</div>
+
+              </div>
+
+              <div class="text-sm font-bold gold-text shrink-0">Load</div>
+
+            </div>
+
+          `;
+
+          row.addEventListener("click", () => loadCase(id));
+
+          resultsList.appendChild(row);
+
+        });
+
+      }
+
+
+
+      async function doSearch(){
+
+        if (!resultsList) return;
+
+        const q = (searchQ?.value || "").trim();
+
+        const tag = (searchTag?.value || "").trim();
+
+        const url = new URL(`${backendBase}/cases`);
+
+        if (q) url.searchParams.set("q", q);
+
+        if (tag) url.searchParams.set("tag", tag);
+
+
+
+        resultsList.innerHTML = `<div class="text-xs muted">Searching…</div>`;
+
+        try {
+
+          const r = await fetch(url.toString(), { cache: "no-store" });
+
+          const j = await r.json().catch(() => ({}));
+
+          if (!r.ok) throw new Error(j?.message || "Search failed");
+
+          renderSearchList(j?.cases || j?.items || []);
+
+        } catch {
+
+          resultsList.innerHTML = `<div class="text-xs muted">Search error. (Backend may not support /cases)</div>`;
+
+        }
+
+      }
+
+
+
+      async function loadCase(id){
+
+        if (!id) return;
+
+        if (summaryText) summaryText.textContent = "Loading case…";
+
+        scrollToId("resultsCard");
+
+
+
+        try {
+
+          const r = await fetch(`${backendBase}/case/${encodeURIComponent(id)}`, { cache: "no-store" });
+
+          const j = await r.json().catch(() => ({}));
+
+          if (!r.ok){
+
+            if (summaryText) summaryText.textContent = `Could not load case: ${j?.message || "Error"}`;
+
+            toast("Load failed.");
+
+            return;
+
+          }
+
+
+
+          const c = j.case || j.item || j;
+
+          const meta = c.meta || {};
+
+          const data = c.aiResult || c.data || c;
+
+
+
+          if (titleEl) titleEl.value = meta.title || c.title || "";
+
+          if (platformEl) platformEl.value = meta.platform || c.platform || "";
+
+          if (countryEl) countryEl.value = meta.country || c.country || "";
+
+          if (languageEl) languageEl.value = meta.language || c.language || "";
+
+          if (tagsEl) tagsEl.value = Array.isArray(meta.tags) ? meta.tags.join(", ") : (meta.tags || "");
+
+          if (notesEl) notesEl.value = meta.notes || c.notes || "";
+
+
+
+          lastResponse = data;
+
+          lastCaseId = c.id || c._id || id;
+
+
+
+          if (caseIdEl) caseIdEl.textContent = String(lastCaseId);
+
+          if (caseSavedHint) caseSavedHint.textContent = "Loaded from saved cases.";
+
+
+
+          setResultUI(data);
+
+
+
+                    if (rawJson){
+
+                      rawJson.textContent = JSON.stringify(j, null, 2);
+
+                      rawJson.classList.remove("hidden");
+
+                    }
+
+          
+
+                    toast("Case loaded ?");
+
+                  } catch (e) {
+
+                    console.error("LOAD CASE ERROR:", e);
+
+                    if (summaryText) summaryText.textContent = "Error loading case.";
+
+                    toast("Load error.");
+
+                  }
+
+                }
+
+          
+
+                searchBtn?.addEventListener("click", doSearch);
+
+                clearBtn?.addEventListener("click", () => {
+
+                  if (searchQ) searchQ.value = "";
+
+                  if (searchTag) searchTag.value = "";
+
+                  if (resultsList) resultsList.innerHTML = "";
+
+                });
+
+          
+
+                // ===========================
+
+                // Tone toggle (enterprise mode)
+
+                // ===========================
+
+                toneToggle?.addEventListener("click", () => {
+
+                  const isEnterprise = localStorage.getItem("voicesafe_enterprise") === "true";
+
+                  const newState = !isEnterprise;
+
+                  localStorage.setItem("voicesafe_enterprise", String(newState));
+
+                  toneToggle.innerHTML = `<i class="fa-solid fa-building-columns mr-2"></i>Enterprise mode: ${newState ? "ON" : "OFF"}`;
+
+                  toast(`Enterprise mode: ${newState ? "ON" : "OFF"}`);
+
+                });
+
+          
+
+                // Load initial state
+
+                const isEnterprise = localStorage.getItem("voicesafe_enterprise") === "true";
+
+                if (toneToggle) toneToggle.innerHTML = `<i class="fa-solid fa-building-columns mr-2"></i>Enterprise mode: ${isEnterprise ? "ON" : "OFF"}`;
+
+          
+
+                // URL param: load case on init
+
+                (function loadCaseFromUrl(){
+
+                  const u = new URL(window.location.href);
+
+                  const caseId = u.searchParams.get("case");
+
+                  if (caseId && caseId !== "local") {
+
+                    loadCase(caseId);
+
+                  }
+
+                })();
+
+              });
+
+
+
+            
+
+      // ===========================
+      // LANGUAGE SYSTEM (merged)
+      // ===========================
+      // ===========================
+
+// LANGUAGE SYSTEM (global + stable + desktop-friendly)
+    const LANG_STORAGE_KEY = "vs_lang";
+    const SUPPORTED_LANGS = ['en', 'sk', 'de', 'fr', 'es', 'it', 'pt', 'nl', 'sv', 'no', 'da', 'fi', 'pl', 'cs', 'hu', 'ro', 'bg', 'el', 'tr', 'uk', 'ru', 'ar', 'he', 'hi', 'id', 'vi', 'th', 'zh', 'ja', 'ko'];
+
+    const langSwitch = document.getElementById("langSwitch");
+
+    let currentLang = "en";
+    let dict = {};
+
+    function normalizeLang(input) {
+      if (!input) return "en";
+      const s = String(input).trim().toLowerCase();
+      // "en-US" -> "en"
+      const base = s.split("-")[0];
+      return base || "en";
+    }
+
+    function pickDefaultLang() {
+      const saved = localStorage.getItem(LANG_STORAGE_KEY);
+      const savedNorm = normalizeLang(saved);
+      if (SUPPORTED_LANGS.includes(savedNorm)) return savedNorm;
+
+      const nav = normalizeLang(navigator.language || navigator.userLanguage);
+      if (SUPPORTED_LANGS.includes(nav)) return nav;
+
+      // Special: treat "cs" as Slovak-friendly fallback for CZ users
+      if (nav === "cs") return "sk";
+
+      return "en";
+    }
+
+    function t(key) {
+      return (dict && dict[key]) ? dict[key] : key;
+    }
+
+    async function fetchJson(url) {
+      const res = await fetch(url, { cache: "no-store" });
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      return await res.json();
+    }
+
+    async function loadLanguage(lang) {
+      const wanted = normalizeLang(lang);
+      const target = SUPPORTED_LANGS.includes(wanted) ? wanted : "en";
+
+      try {
+        // Prefer i18n/<lang>.json if you have it
+        dict = await fetchJson(`./i18n/${target}.json`);
+        currentLang = target;
+      } catch (e1) {
+        try {
+          // Backward compat: allow <lang>.json in root
+          dict = await fetchJson(`./${target}.json`);
+          currentLang = target;
+        } catch (e2) {
+          // Final fallback: English
+          try {
+            dict = await fetchJson(`./i18n/en.json`);
+          } catch (e3) {
+            dict = {};
+          }
+          currentLang = "en";
+        }
+      }
+
+      // Persist + set <html lang>
+      localStorage.setItem(LANG_STORAGE_KEY, currentLang);
+      document.documentElement.setAttribute("lang", currentLang);
+
+      // Sync dropdown
+      if (langSwitch) langSwitch.value = currentLang;
+
+      applyTranslations();
+    }
+
+    function applyTranslations() {
+      // 1) Generic translation hooks (optional)
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const key = el.getAttribute("data-i18n");
+        if (key) el.textContent = t(key);
+      });
+      document.querySelectorAll("[data-i18n-html]").forEach(el => {
+        const key = el.getAttribute("data-i18n-html");
+        if (key) el.innerHTML = t(key);
+      });
+      document.querySelectorAll("[data-i18n-placeholder]").forEach(el => {
+        const key = el.getAttribute("data-i18n-placeholder");
+        if (key) el.setAttribute("placeholder", t(key));
+      });
+      document.querySelectorAll("[data-i18n-title]").forEach(el => {
+        const key = el.getAttribute("data-i18n-title");
+        if (key) el.setAttribute("title", t(key));
+      });
+
+      // 2) Keep your existing id-based translations (so nothing breaks)
+      const analyzeBtn = document.getElementById("analyzeBtn");
+      if (analyzeBtn) analyzeBtn.innerText = t("analyze");
+
+      const recordBtn = document.getElementById("recordBtn");
+      if (recordBtn) recordBtn.innerText = t("record");
+
+      // If you want FULL translations for all text, we will add data-i18n keys
+      // and ship i18n JSON files in the next step.
+    }
+
+    if (langSwitch) {
+      langSwitch.addEventListener("change", (e) => {
+        loadLanguage(e.target.value);
+      });
+    }
+
+    // auto-detect on first load
+    (async function () {
+      await loadLanguage(pickDefaultLang());
+    })();
+
+  </script>
+
+<script>
+window.bootWiring = function () {
+
+  if (window.__VS_BOOTED__) return;
+  window.__VS_BOOTED__ = true;
+
+  const $ = (id) => document.getElementById(id);
+
+  const fileInput = $("fileInput");
+  const analyzeBtn = $("analyzeBtn");
+
+  if (!fileInput || !analyzeBtn) {
+    console.log("VoiceSafe: DOM not ready");
+    return;
+  }
+
+  analyzeBtn.addEventListener("click", () => {
+    console.log("Analyze clicked ✅");
+  });
+
+  console.log("VoiceSafe booted ✅");
+};
+</script>
+
+<!-- CONFIG (API URL) -->
+<script src="config.js"></script>
+
+<!-- SHARE CARD -->
+<script src="share-card.js"></script>
+
+<script>
+  setTimeout(() => {
+    if (typeof window.bootWiring === "function") {
+      window.bootWiring();
+      console.log("bootWiring executed");
+    }
+  }, 0);
+</script>
+
+</body>
+</html>

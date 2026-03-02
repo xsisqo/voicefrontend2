@@ -1,0 +1,18 @@
+# file: frontend/humans.txt
+VoiceSafe.ai
+AI Voice Scam Detection (Prototype)
+
+Team:
+- Product / Engineering: VoiceSafe Team
+- Contact: support@voicesafe.ai
+- Security: security@voicesafe.ai
+
+Build:
+- Environment: Production
+- Region: EU-first posture
+- Privacy: No permanent voice storage (prototype)
+
+Tech:
+- Frontend: HTML + Tailwind (prototype)
+- Backend: Node/Express (Render)
+- AI: Flask + librosa (Render)

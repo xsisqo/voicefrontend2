@@ -1,0 +1,48 @@
+<!-- file: frontend/security -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+  <title>VoiceSafe — Security</title>
+  <meta name="theme-color" content="#070A12"/>
+  <style>
+    body{margin:0;min-height:100vh;background:#070A12;color:#fff;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
+    .wrap{max-width:980px;margin:0 auto;padding:28px}
+    .card{border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);border-radius:18px;padding:18px}
+    a{color:#F7D774}
+    .muted{opacity:.75}
+    code{font-family:ui-monospace,Menlo,Consolas,monospace}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Security</h1>
+    <p class="muted">VoiceSafe welcomes responsible disclosure.</p>
+
+    <div class="card">
+      <h2>Report a vulnerability</h2>
+      <p>Email: <a href="mailto:security@voicesafe.ai">security@voicesafe.ai</a></p>
+      <p class="muted">Include: steps to reproduce, impact, logs/screenshots, and affected URL.</p>
+    </div>
+
+    <div class="card" style="margin-top:12px">
+      <h2>Scope</h2>
+      <ul>
+        <li>Web app: <code>voicesafe.ai</code></li>
+        <li>Backend: <code>voicesafe-backend-1.onrender.com</code></li>
+        <li>AI service: <code>voicesafe-ai.onrender.com</code></li>
+      </ul>
+      <p class="muted">Do not test against third-party systems or real users. No social engineering.</p>
+    </div>
+
+    <div class="card" style="margin-top:12px">
+      <h2>Hall of fame</h2>
+      <p class="muted">We can acknowledge valid reports (optional).</p>
+      <p id="hall-of-fame" class="muted">No entries yet.</p>
+    </div>
+
+    <p class="muted" style="margin-top:16px"><a href="/">Back to app</a></p>
+  </div>
+</body>
+</html>

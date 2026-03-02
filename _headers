@@ -1,0 +1,10 @@
+# file: frontend/_headers
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: microphone=(self), camera=(), geolocation=()
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Resource-Policy: same-site
+  Strict-Transport-Security: max-age=15552000; includeSubDomains; preload
+  Content-Security-Policy: default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; font-src 'self' https://cdnjs.cloudflare.com data:; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com; connect-src 'self' https://voicesafe-backend-1.onrender.com https://voicesafe-ai.onrender.com http://127.0.0.1:10000 http://127.0.0.1:8000; media-src 'self' blob: data:; worker-src 'self'; manifest-src 'self';

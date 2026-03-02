@@ -1,0 +1,7 @@
+# file: frontend/pgp.txt
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+Version: VoiceSafe Placeholder
+
+mQINBGZplaceholder...REPLACE_WITH_REAL_KEY...IDAQAB
+=0000
+-----END PGP PUBLIC KEY BLOCK-----

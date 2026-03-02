@@ -1,0 +1,4 @@
+# file: frontend/robots.txt
+User-agent: *
+Allow: /
+Sitemap: /sitemap.xml

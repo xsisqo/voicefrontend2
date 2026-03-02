@@ -1,0 +1,7 @@
+{
+  "app": "VoiceSafe",
+  "channel": "prod",
+  "build": "2026-02-28",
+  "commit": "unknown",
+  "notes": "Enterprise PWA bundle + diagnostics"
+}

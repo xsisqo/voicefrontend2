@@ -1,0 +1,48 @@
+{
+  "id": "/",
+  "name": "VoiceSafe — AI Voice Scam Detection",
+  "short_name": "VoiceSafe",
+  "description": "Enterprise-grade AI voice scam detection. Analyze recordings, detect impersonation, AI cloning and fraud risk instantly.",
+  "lang": "en",
+  "dir": "ltr",
+
+  "start_url": "/?source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui", "browser"],
+  "orientation": "portrait",
+
+  "background_color": "#070A12",
+  "theme_color": "#070A12",
+
+  "categories": ["security", "finance", "utilities", "productivity"],
+
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-192-maskable.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+
+  "shortcuts": [
+    {
+      "name": "Analyze",
+      "short_name": "Analyze",
+      "description": "Upload or record a voice sample",
+      "url": "/#analyzer",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "Investor Demo",
+      "short_name": "Demo",
+      "description": "Load a demo report",
+      "url": "/?demo=true",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    }
+  ],
+
+  "screenshots": [
+    { "src": "/screenshots/desktop-1.png", "sizes": "1280x720", "type": "image/png", "form_factor": "wide" },
+    { "src": "/screenshots/mobile-1.png", "sizes": "750x1334", "type": "image/png" }
+  ]
+}

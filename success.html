@@ -1,0 +1,74 @@
+<!-- file: frontend/success.html -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>VoiceSafe — Pro Activated</title>
+  <meta name="theme-color" content="#070A12" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body{background:#070A12}
+  </style>
+</head>
+<body class="min-h-screen text-white flex items-center justify-center p-6">
+  <div class="max-w-xl w-full border border-white/10 rounded-3xl bg-white/5 p-7 text-center">
+    <div class="text-4xl font-extrabold text-green-400">✅ Pro Activated</div>
+    <p class="opacity-75 mt-3" id="msg">Confirming subscription…</p>
+
+    <div class="mt-6 flex flex-col gap-2">
+      <button id="goBtn" class="bg-yellow-400 text-black px-6 py-3 rounded-xl font-extrabold hover:opacity-95">
+        Return to VoiceSafe
+      </button>
+      <button id="manageBtn" class="border border-white/15 bg-white/5 px-6 py-3 rounded-xl font-semibold hover:opacity-90">
+        Manage subscription
+      </button>
+    </div>
+
+    <p class="text-xs opacity-60 mt-5">
+      If anything looks wrong, contact support with your session_id.
+    </p>
+  </div>
+
+<script>
+(function(){
+  const BACKEND_PROD = "https://voicesafe-backend-1.onrender.com";
+  const msg = document.getElementById("msg");
+  const goBtn = document.getElementById("goBtn");
+  const manageBtn = document.getElementById("manageBtn");
+
+  goBtn.addEventListener("click", () => window.location.href = "/");
+  manageBtn.addEventListener("click", () => window.location.href = "/");
+
+  async function verify(){
+    const url = new URL(window.location.href);
+    const sessionId = url.searchParams.get("session_id");
+
+    if (!sessionId){
+      msg.textContent = "No session_id found. If you paid, open the app and try again.";
+      return;
+    }
+
+    try{
+      const r = await fetch(`${BACKEND_PROD}/verify-session?session_id=${encodeURIComponent(sessionId)}`, { cache:"no-store" });
+      const data = await r.json().catch(()=>({}));
+      if (r.ok && data?.ok && data?.isPro){
+        localStorage.setItem("voicesafe_pro","true");
+        if (data.customerId) localStorage.setItem("voicesafe_customer_id", data.customerId);
+        msg.textContent = "Subscription confirmed. Redirecting…";
+        url.searchParams.delete("session_id");
+        window.history.replaceState({}, "", url.pathname);
+        setTimeout(()=> window.location.href = "/", 800);
+      } else {
+        msg.textContent = "Payment detected, but subscription not active yet. Please try again in 1 minute.";
+      }
+    } catch(e){
+      msg.textContent = "Verification failed (network). Please retry from the main app.";
+    }
+  }
+
+  verify();
+})();
+</script>
+</body>
+</html>
